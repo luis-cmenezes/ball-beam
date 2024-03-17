@@ -2,3 +2,4 @@
 	path = micro_ros_arduino
 	url = git@github.com:micro-ROS/micro_ros_arduino.git
 	branch = humble
+	ignore = all
