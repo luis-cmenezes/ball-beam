@@ -51,9 +51,10 @@ RUN ./arduino-cli lib install --zip-path micro-ros.zip && rm micro-ros.zip
 # Getting and configuring terminal and env vars
 COPY .bashrc_ex /root/.bashrc 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
+RUN echo "source /root/ball-beam/install/local_setup.bash" >> /root/.bashrc
 RUN echo "alias arduino='/root/arduino-ide/arduino-ide --no-sandbox'" >> /root/.bashrc
 ENV DISPLAY :0
 
 # Final configs
-WORKDIR /root
+WORKDIR /root/ball-beam/
 CMD ["bash"]

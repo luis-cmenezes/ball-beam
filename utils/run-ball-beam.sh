@@ -16,6 +16,9 @@ gnome-terminal -- docker run --rm -v /dev:/dev \
 docker run -it --rm --net=host \
          -v $XSOCK:$XSOCK:ro \
          -v /dev:/dev \
+         -v $(git rev-parse --show-toplevel)/src:/root/ball-beam/src/ \
+         -v $(git rev-parse --show-toplevel)/install:/root/ball-beam/install/ \
+         -v $(git rev-parse --show-toplevel)/build:/root/ball-beam/build/ \
          -e DISPLAY=$DISPLAY \
          --privileged \
          ball-beam:latest  
