@@ -1,0 +1,4 @@
+[submodule "micro_ros_arduino"]
+	path = micro_ros_arduino
+	url = git@github.com:micro-ROS/micro_ros_arduino.git
+	branch = humble
