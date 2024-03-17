@@ -20,6 +20,7 @@ docker run -it --rm --net=host \
          --privileged \
          ball-beam:latest  
 
+# Stop micro ros agent container
 docker stop micro_ros_agent
 
 # Unallows root

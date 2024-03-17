@@ -44,9 +44,9 @@ RUN ./arduino-cli core update-index --config-file arduino-cli.yaml && ./arduino-
 RUN wget -O get-pip.py https://bootstrap.pypa.io/get-pip.py && python get-pip.py && pip install pyserial && rm get-pip.py
 
 # Installing micro ros Arduino
-#RUN wget -O micro-ros.zip https://github.com/micro-ROS/micro_ros_arduino/archive/refs/tags/v2.0.7-humble.zip
-#RUN ./arduino-cli config set library.enable_unsafe_install true
-#RUN ./arduino-cli lib install --zip-path micro-ros.zip && rm micro-ros.zip
+COPY micro_ros_arduino.zip micro-ros.zip
+RUN ./arduino-cli config set library.enable_unsafe_install true
+RUN ./arduino-cli lib install --zip-path micro-ros.zip && rm micro-ros.zip
 
 # Getting and configuring terminal and env vars
 COPY .bashrc_ex /root/.bashrc 
