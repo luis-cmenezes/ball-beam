@@ -48,6 +48,9 @@ COPY micro_ros_arduino.zip micro-ros.zip
 RUN ./arduino-cli config set library.enable_unsafe_install true
 RUN ./arduino-cli lib install --zip-path micro-ros.zip && rm micro-ros.zip
 
+# Installing extra Arduino libraries
+RUN ./arduino-cli lib install ESP32Servo
+
 # Getting and configuring terminal and env vars
 COPY .bashrc_ex /root/.bashrc 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
