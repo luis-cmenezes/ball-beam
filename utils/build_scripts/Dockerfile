@@ -58,6 +58,9 @@ RUN echo "source /root/ball-beam/install/local_setup.bash" >> /root/.bashrc
 RUN echo "alias arduino='/root/arduino-ide/arduino-ide --no-sandbox'" >> /root/.bashrc
 ENV DISPLAY :0
 
+# Installing python dependencies
+RUN pip install matplotlib scipy
+
 # Final configs
 WORKDIR /root/ball-beam/
 CMD ["bash"]
