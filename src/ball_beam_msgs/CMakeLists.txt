@@ -9,7 +9,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/TriggerServo.srv"
+  "srv/PotentiometerCalibration.srv"
 )
 
 if(BUILD_TESTING)
