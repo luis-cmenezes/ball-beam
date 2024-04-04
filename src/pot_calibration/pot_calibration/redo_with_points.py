@@ -1,9 +1,6 @@
-import rclpy, os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-
-from pot_calibration.client_pot import PotentiometerClient
 
 def save_calibration(points, ang, lin):
     with open('/root/ball-beam/src/pot_calibration/calibration/current_calibration.txt', 'a') as file:
@@ -12,7 +9,16 @@ def save_calibration(points, ang, lin):
 
         sign = '+' if lin >= 0 else '-'
         file.write(f'Angle={ang}*PotRead {sign} {abs(lin)}')
-    
+
+def lin_reg(points):
+    points = np.array(points)
+    x = points[:,0]
+    y = points[:,1]
+
+    slope, intercept, _, _, _ = stats.linregress(x, y)
+
+    return slope, intercept
+
 def plot_calibration(points, ang, lin):
     points = np.array(points)
     x = points[:,0]
@@ -38,55 +44,17 @@ def plot_calibration(points, ang, lin):
     plt.savefig('/root/ball-beam/src/pot_calibration/calibration/current_calibration.png')
     plt.close()
 
-def calibration(client):
-    com = None
-
-    calibration_points = []
-    while com != 'q':
-        print('Move up [U] | Move down [D] | Quit [Q]')
-        com = input('Select option: ').lower()
-
-        if com in 'ud':
-            if com == 'u':
-                servo_increment = 10
-            elif com == 'd':
-                servo_increment = -10
-            
-            pot = client.send_request(servo_increment).pot_read
-
-            try:
-                rad_angle = round( 3.14*float(input('Angle measurement (degrees): '))/180.0 , 5)
-                calibration_points.append((pot, rad_angle))
-            except:
-                print('Input error, point not added to list.')
-
-    return calibration_points
-
-def lin_reg(points):
-    points = np.array(points)
-    x = points[:,0]
-    y = points[:,1]
-
-    slope, intercept, _, _, _ = stats.linregress(x, y)
-
-    return slope, intercept
+def calibration():
+    return [(2310, -0.199), (2316, -0.166), (2335, -0.133), (2381, -0.085), (2426, -0.045), (2481, 0.005), (2524, 0.044), (2569, 0.091), (2622, 0.145), (2661, 0.181), (2701, 0.23), (2738, 0.263), (2733, 0.229), (2696, 0.183), (2657, 0.145), (2606, 0.089), (2561, 0.047), (2534, 0.007), (2475, -0.045), (2443, -0.085), (2389, -0.129), (2357, -0.16)]
 
 def main(args=None):
-    rclpy.init(args=args)
-    
-    client = PotentiometerClient()
-
-    cal_points =  calibration(client)
-    print(f'Points captured (Pot-Read, Beam-Angle(rad)):\n\t{cal_points}')
+    cal_points =  calibration()
 
     ang_coef, lin_coef = lin_reg(cal_points)
 
     plot_calibration(cal_points, ang_coef, lin_coef)
     
     save_calibration(cal_points, ang_coef, lin_coef)
-
-    client.destroy_node()
-    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
