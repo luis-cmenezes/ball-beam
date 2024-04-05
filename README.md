@@ -10,7 +10,7 @@
 > The chosen system is the one in the image, known as the ball-and-beam system, in which the objective is to control the position of the ball.
 > Some other project details involve: design of classical controllers, application of digital control concepts, embedded ROS2.
 
-## Content
+## ⭐ Content
 The project, currently under development, features:
 
 - [x] Docker images for build e run (may change as needed)
@@ -20,7 +20,7 @@ The project, currently under development, features:
 - [ ] Matlab simulation (servo vs. position) and controller development package
 - [ ] ROS for in-run control
 
-## Electrical Diagram
+## ⚡ Electrical Diagram
 
 The electrical diagram of the project includes an ESP32, for microros usage, a potentiometer used as a rotation sensor, an infrared sensor for distance measurement, and finally, a servo motor with its actuator power supply.
 
@@ -28,7 +28,7 @@ Connected as shown in the diagram below:
 
 <img src="https://i.imgur.com/N8nYxcS.png" width="478" height="412">
 
-## Build/Flash
+## ⚙️ Build/Flash
 This project has been developed to be independent of any local installations on the user's computer. Therefore, its only dependency not contained in this repository is [Docker](https://docs.docker.com/desktop/install/linux-install/). 
 Please ensure its installation and has sudo privileges before using the build scripts.
 
@@ -42,7 +42,7 @@ In the utils/build_scripts folder, you will find scripts for building the projec
 
 It's worth mentioning that for these codes to function correctly, they should be executed from the utils/build_scripts folder. Additionally, some scripts may require sudo password for execution.
 
-## Run
+## 💻 Run
 Assuming that the entire build process was successful, to execute the project, simply navigate to the utils/ folder and execute:
 
 ```./run-ball-beam.sh ```
@@ -52,3 +52,14 @@ This command will execute two terminals: One with the microros-agent, enabling t
 If you're only using the project, the following command executes the in-run control code:
 
 ```ros2 launch ...``` (UPDATE)
+
+## 📖 References
+["Ball & Beam: System Modeling", Control Tutorials for MATLAB&Simulink](https://ctms.engin.umich.edu/CTMS/index.php?example=BallBeam&section=SystemModeling)
+
+## 🤝 Collaborators
+- [Professor Éder Alves de Moura](http://www.feelt.ufu.br/pessoas/docentes/eder-alves-de-moura) 
+- [Professor Pedro Augusto Queiroz de Assis](http://www.femec.ufu.br/pessoas/docentes/pedro-augusto-queiroz-de-assis)
+- Student Breno Gonçalves
+- Student João
+- Student Lucas
+- Student Dilermando
