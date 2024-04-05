@@ -4,7 +4,7 @@
 
 # Ball-and-beam Project
 
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwLzoRfZndQdFkY2GrG0Fa56MpodpUgbtSf7SZl1vbaQ&s">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwLzoRfZndQdFkY2GrG0Fa56MpodpUgbtSf7SZl1vbaQ&s" width="490" height="412">
 
 > The project is part of the Digital Systems course, aiming at the control of any system.
 > The chosen system is the one in the image, known as the ball-and-beam system, in which the objective is to control the position of the ball.
@@ -26,7 +26,7 @@ The electrical diagram of the project includes an ESP32, for microros usage, a p
 
 Connected as shown in the diagram below:
 
-<img src="https://i.imgur.com/N8nYxcS.png">
+<img src="https://i.imgur.com/N8nYxcS.png" width="478" height="412">
 
 ## Build/Flash
 This project has been developed to be independent of any local installations on the user's computer. Therefore, its only dependency not contained in this repository is [Docker](https://docs.docker.com/desktop/install/linux-install/). 
