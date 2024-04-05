@@ -17,7 +17,7 @@ The project, currently under development, features:
 - [x] Build and run scripts (may change as needed)
 - [x] ROS potentiometer calibration package
 - [x] ROS step test package (servo vs. table)
-- [ ] Matlab simulation package (servo vs. position)
+- [ ] Matlab simulation (servo vs. position) and controller development package
 - [ ] ROS for in-run control
 
 ## Build/Flash
@@ -34,3 +34,13 @@ In the utils/build_scripts folder, you will find scripts for building the projec
 
 It's worth mentioning that for these codes to function correctly, they should be executed from the utils/build_scripts folder. Additionally, some scripts may require sudo password for execution.
 
+## Run
+Assuming that the entire build process was successful, to execute the project, simply navigate to the utils/ folder and execute:
+
+```./run-ball-beam.sh ```
+
+This command will execute two terminals: One with the microros-agent, enabling the exchange of ROS messages through serial with the microcontroller, and another running inside a Docker container with ROS2 for executing local code commands (such as ros2 run or ros2 launch).
+
+If you're only using the project, the following command executes the in-run control code:
+
+```ros2 launch ...``` (UPDATE)
