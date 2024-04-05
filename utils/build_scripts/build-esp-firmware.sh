@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ESP_CODE_PKG=pot_calibration/
+ESP_CODE_PKG=servo_beam_step/
 BALL_BEAM_TOP_DIR=$(git rev-parse --show-toplevel)
 
 # Flash esp 32 code 

@@ -10,6 +10,8 @@ find_package(ament_cmake REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/PotentiometerCalibration.srv"
+  "srv/TriggerStep.srv"
+  "msg/StepData.msg"
 )
 
 if(BUILD_TESTING)
