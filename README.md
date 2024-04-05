@@ -20,6 +20,14 @@ The project, currently under development, features:
 - [ ] Matlab simulation (servo vs. position) and controller development package
 - [ ] ROS for in-run control
 
+## Electrical Diagram
+
+The electrical diagram of the project includes an ESP32, for microros usage, a potentiometer used as a rotation sensor, an infrared sensor for distance measurement, and finally, a servo motor with its actuator power supply.
+
+Connected as shown in the diagram below:
+
+<img src="https://i.imgur.com/N8nYxcS.png">
+
 ## Build/Flash
 This project has been developed to be independent of any local installations on the user's computer. Therefore, its only dependency not contained in this repository is [Docker](https://docs.docker.com/desktop/install/linux-install/). 
 Please ensure its installation and has sudo privileges before using the build scripts.
