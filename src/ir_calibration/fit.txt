@@ -1,0 +1,2 @@
+AnalogRead [0-4096] | Distance [cm]
+Distance = 1/(0.000035112051070*AnalogRead + 0.029455499904335)

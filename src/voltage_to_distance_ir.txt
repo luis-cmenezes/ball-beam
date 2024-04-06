@@ -1,1 +1,0 @@
-int distance = 13*pow(analogRead(IR_PIN)*0,000805664,-1);
