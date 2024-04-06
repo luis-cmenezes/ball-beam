@@ -16,6 +16,7 @@ The project, currently under development, features:
 - [x] Docker images for build e run (may change as needed)
 - [x] Build and run scripts (may change as needed)
 - [x] ROS potentiometer calibration package
+- [x] Arduino/Matlab infrared distance sensor calibration package
 - [x] ROS step test package (servo vs. table)
 - [ ] Matlab simulation (servo vs. position) and controller development package
 - [ ] ROS for in-run control
