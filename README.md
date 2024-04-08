@@ -60,7 +60,8 @@ If you're only using the project, the following command executes the in-run cont
 ## 🤝 Collaborators
 - [Professor Éder Alves de Moura](http://www.feelt.ufu.br/pessoas/docentes/eder-alves-de-moura) 
 - [Professor Pedro Augusto Queiroz de Assis](http://www.femec.ufu.br/pessoas/docentes/pedro-augusto-queiroz-de-assis)
-- Student Breno Gonçalves
-- Student João
-- Student Lucas
-- Student Dilermando
+- [Student Breno Gonçalves Vitorino](https://github.com/brenogvit)
+- [Student João Victor Assunção Pereira](https://github.com/Felicxio)
+- [Student Lucas Fernandes Resende Bonnas](https://github.com/lucasbonnas) 
+- [Student Dilermando Alexandre Duarte Almeida](https://github.com/De4lerr)
+- [Student Thalles Almeida Ferreira](https://github.com/Thaaferreira)
