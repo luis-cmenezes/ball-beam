@@ -61,6 +61,9 @@ ENV DISPLAY :0
 # Installing python dependencies
 RUN pip install matplotlib scipy
 
+# Installing rqt (ros visualizer)
+RUN apt install ros-humble-rqt* -y
+
 # Final configs
 WORKDIR /root/ball-beam/
 CMD ["bash"]
