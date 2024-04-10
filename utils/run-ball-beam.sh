@@ -20,6 +20,7 @@ docker run -it --rm --net=host \
          -v $(git rev-parse --show-toplevel)/install:/root/ball-beam/install/ \
          -v $(git rev-parse --show-toplevel)/build:/root/ball-beam/build/ \
          -e DISPLAY=$DISPLAY \
+         --name ball_beam_container \
          --privileged \
          ball-beam:latest  
 
