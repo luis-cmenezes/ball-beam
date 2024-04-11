@@ -9,24 +9,19 @@
 #include <stdio.h>
 #include <ESP32Servo.h>
 
-#define TESTING 1
-
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){while(1){};}}
 
 #define SERVO_PIN 18
 #define SERVO_ZERO_POS 58
-#define LED_PIN 2
 
 #define POT_PIN 35
 #define IR_PIN 25
 #define MEASURES 30
 
-#define SAMPLE_TIME 0.1 //s
-
 Servo base_servo;
 int64_t servo_pos = 0;
 int aver_pot = 0, aver_ir = 0, res_came = 0;
-double time_init = 0.0;
+long unsigned int time_init = 0;
 
 rcl_node_t node;
 rclc_support_t support;
@@ -37,13 +32,13 @@ ball_beam_msgs__srv__InRunControl_Request control_action_req;
 ball_beam_msgs__srv__InRunControl_Response control_action_res;
 rcl_client_t client;
 
-void error_fn(){
-  for(int j = 0; j < 10; j++){
-    delay(100);
-    digitalWrite(LED_PIN,HIGH);
-    delay(100);
-    digitalWrite(LED_PIN,LOW);
-  }
+#define LED 2
+
+void blinkLed(){
+  digitalWrite(LED, HIGH);
+  delay(100);
+  digitalWrite(LED, LOW);
+  delay(100);
 }
 
 void client_callback(const void * msg){
@@ -54,12 +49,12 @@ void client_callback(const void * msg){
 }
 
 void setup() {
+  pinMode(LED,OUTPUT);
   set_microros_transports();
 
   base_servo.attach(SERVO_PIN, 500, 2400);
   base_servo.setPeriodHertz(50); 
   base_servo.write(SERVO_ZERO_POS);
-  pinMode(LED_PIN,OUTPUT);
   
   delay(1000); 
 
@@ -79,12 +74,10 @@ void setup() {
   RCCHECK(rclc_executor_add_client(&executor, &client, &control_action_res, client_callback));
    
   ball_beam_msgs__srv__InRunControl_Request__init(&control_action_req);
+  time_init = millis();
 }
 
 void loop() {
-
-  time_init = micros();
-
   aver_pot = 0;
   aver_ir = 0;
   res_came = 0;
@@ -97,14 +90,16 @@ void loop() {
 
   control_action_req.pot_analog_read = aver_pot;
   control_action_req.ir_analog_read = aver_ir;
+  control_action_req.time_elapsed = millis() - time_init;
 
+  time_init = millis();
   RCCHECK(rcl_send_request(&client, &control_action_req, &servo_pos));
 
   while(!res_came){
-    rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1));
+    rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+    delay(10);
+    //blinkLed();
   }
   
   base_servo.write(SERVO_ZERO_POS + servo_pos);
-
-  while ((micros() - time_init)/1000000.0 < SAMPLE_TIME){ }
 }
