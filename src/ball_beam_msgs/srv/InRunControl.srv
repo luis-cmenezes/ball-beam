@@ -1,5 +1,0 @@
-int16 ir_analog_read
-int16 pot_analog_read
-int32 time_elapsed
----
-int16 servo_control_action

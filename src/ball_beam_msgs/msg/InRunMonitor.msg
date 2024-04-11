@@ -1,5 +1,5 @@
 float32 cur_error
 float32 cur_table_angle
 int16 cur_reference
-int16 cur_control_action
+float32 cur_control_action
 float32 cur_distance

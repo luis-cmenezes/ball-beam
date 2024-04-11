@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ESP_CODE_PKG=run_control/
+ESP_CODE_PKG=esp32_control/
 BALL_BEAM_TOP_DIR=$(git rev-parse --show-toplevel)
 
 # Flash esp 32 code 
