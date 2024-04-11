@@ -12,7 +12,6 @@
 #define SERVO_MAX 1.5708 //from "zero" (servo=58 dg in .ino)
 #define SERVO_MIN -0.959931 //from "zero" (servo=58 dg in .ino)
 #define START_REF 8 //cm
-#define SAMPLE_TIME 0.1 //s
 
 using namespace std::chrono_literals;
 
@@ -34,13 +33,8 @@ public:
     
 private:
     // Control vars
-    float ref=START_REF;
-    float table_angle=0;
-    int control_action=0, distance;
-
-    // Control law vars
-    float kp=1, ki=1, kd=1;
-    float error=0, errorkm1=0, error_int=0, error_der=0;
+    int ref=START_REF, control_action=0;
+    float table_angle=0.0, distance=0.0;
 
     // ROS vars
     rclcpp::Service<ball_beam_msgs::srv::InRunControl>::SharedPtr control_service_;
@@ -50,8 +44,15 @@ private:
 
     rclcpp::Service<ball_beam_msgs::srv::UpdatePID>::SharedPtr pid_service_;
 
+    // Control law vars
+    float error, err_der, err_int=0.0, err_km1=0.0;
+    float u=0.0, u_km1=0.0, u_der;
+    float dt;
+    float kp=0.07, ki=0, kd=0;
+    int anti_windup=1, N=30;
+
     // Conversion functions
-    int read_to_distance(int analog_read){
+    float read_to_distance(int analog_read){
         return 1/(0.000035112051070*analog_read + 0.029455499904335);
     }
 
@@ -61,43 +62,56 @@ private:
 
     // Control functions
     float saturate_control_action(float u){
+        anti_windup=1;
         if (u > SERVO_MAX){
             u = SERVO_MAX;
+            anti_windup=0;
         }
         else if (u < SERVO_MIN){
             u = SERVO_MIN;
+            anti_windup=0;
         }
+
         return u;
     }
 
-    float control_function(int dist){
-        error = ref - dist;
+    float control_function(float y, float dt){
+        error = ref - y;
+        err_der = (error-err_km1)/dt;
+        err_int += anti_windup*dt*(err_km1+error)/2;
 
-        error_int += SAMPLE_TIME*(errorkm1+error)/2;
-        error_der = (errorkm1-error)/SAMPLE_TIME;
+        u_der = (u-u_km1)/dt;
 
-        float u = kp*error + ki*error_int + kd*error_der;
+        u = kp*error + anti_windup*ki*err_int + kd*err_der - u_der/N;
+        u = saturate_control_action(u);
 
-        errorkm1 = error;
+        err_km1 = error;
+        u_km1 = u;
 
-        return saturate_control_action(u);
+        return u;
     }
 
     // ROS functions
     void control_callback(const std::shared_ptr<ball_beam_msgs::srv::InRunControl::Request> request,
                           std::shared_ptr<ball_beam_msgs::srv::InRunControl::Response> response)
-    {
-        distance = read_to_distance(request->ir_analog_read);
-        table_angle = read_to_table_angle(request->pot_analog_read);
+    {   
+        //std::cout << "Request: " << request->ir_analog_read << " " << request->time_elapsed << "\n";
 
-        control_action = round((180.0/3.1415)*control_function(distance));
+        distance = read_to_distance(request->ir_analog_read);
+        dt = request->time_elapsed/1E3;
+
+        control_action = round((180.0/3.1415)*control_function(distance, dt));
 
         response->servo_control_action = control_action;
+
+        //std::cout << "Response: " << response->servo_control_action << "\n\n";
+
+        table_angle = read_to_table_angle(request->pot_analog_read);
     }
     
     void timer_callback()
     {
-      monitor_msg.cur_error          = 10*error;
+      monitor_msg.cur_error          = error;
       monitor_msg.cur_table_angle    = table_angle;
       monitor_msg.cur_reference      = ref;
       monitor_msg.cur_distance       = distance;
@@ -114,10 +128,7 @@ private:
         kd = request->kd;
         ref = request->new_ref;
 
-        error = 0;
-        errorkm1 = 0;
-        error_int = 0;
-        error_der = 0;
+        err_int = 0;
     }
 };
 
