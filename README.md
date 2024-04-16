@@ -18,8 +18,7 @@ The project, currently under development, features:
 - [x] ROS potentiometer calibration package
 - [x] Arduino/Matlab infrared distance sensor calibration package
 - [x] ROS step test package (servo vs. table)
-- [ ] Matlab simulation (servo vs. position) and controller development package
-- [ ] ROS for in-run control
+- [x] ROS for in-run control package
 
 ## ⚡ Electrical Diagram
 
@@ -48,11 +47,9 @@ Assuming that the entire build process was successful, to execute the project, s
 
 ```./run-ball-beam.sh ```
 
-This command will execute two terminals: One with the microros-agent, enabling the exchange of ROS messages through serial with the microcontroller, and another running inside a Docker container with ROS2 for executing local code commands (such as ros2 run or ros2 launch).
+This command will execute two terminals: One with the microros-agent, enabling the exchange of ROS messages through serial with the microcontroller, and another running inside a Docker container with ROS2 for executing local code commands (such as ros2 run or rqt).
 
-If you're only using the project, the following command executes the in-run control code:
-
-```ros2 launch ...``` (UPDATE)
+If you're only using the project, the in-run control code will be executed in esp32 and you can monitor via rqt, there is a pre configured perspective in /src/esp32_control/ that you can import in rqt.
 
 ## 📖 References
 ["Ball & Beam: System Modeling", Control Tutorials for MATLAB&Simulink](https://ctms.engin.umich.edu/CTMS/index.php?example=BallBeam&section=SystemModeling)
